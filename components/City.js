@@ -19,26 +19,27 @@ export default function City() {
             let { status } = await Location.requestPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
+                setLoad(false)
                 return;
+                
             }
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
+            setLoad(false)
         })();
     }, []);
 
 
-    let text = 'Waiting..';
+    let text = ''
     if (errorMsg) {
         text = errorMsg;
-        setLoad(false)
+        
     } else if (location) {
-
         text = JSON.stringify(location);
         fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${~~location.latitude}&lon=${~~location.longitude}&appid=a77482bcf7fbdc313570bd4f1fb9733d`)
             .then(response=> response.json())
             .then(rest=>console.log(rest))
-            setLoad(false)
-    }
+        }
 
     console.log(text)
 
@@ -46,8 +47,8 @@ export default function City() {
 
     return (
         <>
-        {!!load ? <View><Text>InCaricamento</Text><ActivityIndicator/></View>
-                : <View><Text>{text}</Text></View>}
+        {load ? <View><ActivityIndicator size='large' color='#94ebcd'/></View>
+                : <View><Text style={{color:'#94ebcd'}}>{text}</Text></View>}
         <Input
             placeholder='Citta'
             leftIcon={{ type: 'font-awesome', name: 'map-marker' }}
