@@ -1,12 +1,13 @@
 import React from 'react'
 import {Text, View} from 'react-native'
 import City from '../components/City'
-
+import CarouselCard from '../components/CarouselCard'
 export default function Home(){
     return (
         <View>
-        <City></City>
-        <Text>Qui dovree esserci il programma</Text>
+        <City/>
+        <CarouselCard/>
+        
         </View>
     )
 }
