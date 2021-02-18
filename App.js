@@ -15,16 +15,16 @@ export default function App() {
       <HeaderComponent />
       <View style={styles.container}>
         <Home />
-        </View>
-        
+      </View>
+
     </SafeAreaProvider>
 
   );
 }
 
 const styles = StyleSheet.create({
-        container: {
-        flex: 1,
+  container: {
+    flex: 1,
     backgroundColor: '#ffcb91',
   },
 });

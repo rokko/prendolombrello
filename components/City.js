@@ -36,11 +36,17 @@ export default function City() {
         
     } else if (location) {
         text = JSON.stringify(location);
-        fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${~~location.latitude}&lon=${~~location.longitude}&appid=a77482bcf7fbdc313570bd4f1fb9733d`)
+        fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${~~location.coords.latitude}&lon=${~~location.coords.longitude}&appid=a77482bcf7fbdc313570bd4f1fb9733d`)
             .then(response=> response.json())
-            .then(rest=>console.log(rest))
-        }
+            
 
+            console.log(location.coords.latitude)
+            console.log(location.coords.longitude)
+        
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location.coords.latitude}+${location.coords.longitude}&key=eeeddc5e50fe4b888f91496d5fcc0005`)
+            .then(response => response.json())
+            .then(rest =>{setCitta(rest.results['0'].components.city)})
+    }
     console.log(text)
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +54,7 @@ export default function City() {
     return (
         <>
         {load ? <View><ActivityIndicator size='large' color='#94ebcd'/></View>
-                : <View><Text style={{color:'#94ebcd'}}>{text}</Text></View>}
+                : <View><Text style={{color:'#94ebcd'}}>{citta}</Text></View>}
         <Input
             placeholder='Citta'
             leftIcon={{ type: 'font-awesome', name: 'map-marker' }}
